@@ -1,7 +1,7 @@
 #include "modo_ciego.h"
 #include "sg90.h"
 #include "tracker.h"
-
+#include <avr/io.h> 
 // Vinculación con los servos globales del main
 extern SG90_t servo1, servo2, servo3;
 
@@ -33,15 +33,24 @@ void Ciego_ConfigurarGeometria(ModoCiego_Ctrl_t *ctx, float long_caja, float d0,
 }
 
 void Ciego_ComandoActivar(ModoCiego_Ctrl_t *ctx, uint8_t activar) {
-	if (ctx == (void*)0) return;
-	ctx->activo = activar;
-	
-	// Limpieza de seguridad
-	if (!activar) {
-		for (uint8_t i = 0; i < CIEGO_MAX_CAJAS; i++) {
-			ctx->cajas_virtuales[i].activa = 0;
+		if (ctx == (void*)0) return;
+		ctx->activo = activar;
+
+		if (activar) {
+			// NUEVO: Arrancó el modo ciego, clavamos A0 en BAJO
+			PORTC &= ~(1 << PC0);
+			} else {
+			// Limpieza de seguridad
+			for (uint8_t i = 0; i < CIEGO_MAX_CAJAS; i++) {
+				ctx->cajas_virtuales[i].activa = 0;
+			}
+
+			// NUEVO: Verificamos si el modo normal también está apagado
+			extern Clasificador_Ctrl_t mi_clasificador;
+			if (mi_clasificador.estado_master == ESTADO_APAGADO) {
+				PORTC |= (1 << PC0); // Ambos apagados, A0 vuelve a ALTO
+			}
 		}
-	}
 }
 
 void Ciego_AsignarTipoCajaActual(ModoCiego_Ctrl_t *ctx, Clasificador_TipoCaja_t tipo) {

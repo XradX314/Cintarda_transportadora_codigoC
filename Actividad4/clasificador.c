@@ -74,6 +74,9 @@ void Clasificador_ComandoInicio(Clasificador_Ctrl_t *ctx) {
 		ctx->estado_master = ESTADO_ESPERA_CAJA;
 		ctx->suma_distancias_mm = 0UL;
 		ctx->cantidad_muestras = 0UL;
+		
+		// NUEVO: Arrancó el modo normal, clavamos A0 en BAJO
+		PORTC &= ~(1 << PC0);
 	}
 }
 
@@ -95,6 +98,10 @@ void Clasificador_ComandoParada(Clasificador_Ctrl_t *ctx) {
 	// 4. Limpiamos las simulaciones en curso del Modo Ciego
 	for (uint8_t i = 0; i < CIEGO_MAX_CAJAS; i++) {
 		mi_modo_ciego.cajas_virtuales[i].activa = 0;
+	}
+	// NUEVO: Verificamos si el modo ciego también está apagado
+	if (!mi_modo_ciego.activo) {
+		PORTC |= (1 << PC0); // Ambos apagados, A0 vuelve a ALTO
 	}
 }
 

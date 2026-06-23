@@ -233,6 +233,8 @@ void on_s0_detected(void) {
 void on_s0_released(void) {
 // 1. CANDADO
 if (mi_clasificador.estado_master == ESTADO_APAGADO && !mi_modo_ciego.activo) {
+				uint8_t payload[2] = {0, 0};
+				Encode(0x5E, payload, 2);
 	return;
 }
 
@@ -335,6 +337,9 @@ int main(void) {
 	SG90_Init(&servo1, hal_servo1);
 	SG90_Init(&servo2, hal_servo2);
 	SG90_Init(&servo3, hal_servo3);
+	
+	DDRC |= (1 << PC0);   // Configura el pin A0 (PC0) como salida
+	PORTC |= (1 << PC0);  // Lo inicializa en ALTO (Motor/Sistema apagado)
 	
 	sei(); // Habilitación global de interrupciones
 
