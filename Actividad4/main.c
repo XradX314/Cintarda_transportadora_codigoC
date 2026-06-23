@@ -142,12 +142,12 @@ void On2Ms(void) {
 		break;
 		case 1:
 		PORTB |= (1 << PORTB4);
-		OCR1A = current_tcnt + SG90_GetTicks(&servo2);
+		OCR1A = current_tcnt + SG90_GetTicks(&servo3);
 		servo_selector = 2;
 		break;
 		case 2:
 		PORTB |= (1 << PORTB3);
-		OCR1A = current_tcnt + SG90_GetTicks(&servo3);
+		OCR1A = current_tcnt + SG90_GetTicks(&servo2);
 		servo_selector = 0;
 		break;
 		default:

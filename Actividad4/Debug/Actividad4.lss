@@ -4883,8 +4883,8 @@ uint8_t hal_echo(void) { return (PINB & (1 << PORTB2)) ? 1U : 0U; }
     1e26:	85 b1       	in	r24, 0x05	; 5
     1e28:	80 61       	ori	r24, 0x10	; 16
     1e2a:	85 b9       	out	0x05, r24	; 5
-    1e2c:	8b e6       	ldi	r24, 0x6B	; 107
-    1e2e:	93 e0       	ldi	r25, 0x03	; 3
+    1e2c:	8b eb       	ldi	r24, 0xBB	; 187
+    1e2e:	91 e0       	ldi	r25, 0x01	; 1
     1e30:	0e 94 ac 11 	call	0x2358	; 0x2358 <SG90_GetTicks>
     1e34:	80 0f       	add	r24, r16
     1e36:	91 1f       	adc	r25, r17
@@ -4896,8 +4896,8 @@ uint8_t hal_echo(void) { return (PINB & (1 << PORTB2)) ? 1U : 0U; }
     1e48:	85 b1       	in	r24, 0x05	; 5
     1e4a:	88 60       	ori	r24, 0x08	; 8
     1e4c:	85 b9       	out	0x05, r24	; 5
-    1e4e:	8b eb       	ldi	r24, 0xBB	; 187
-    1e50:	91 e0       	ldi	r25, 0x01	; 1
+    1e4e:	8b e6       	ldi	r24, 0x6B	; 107
+    1e50:	93 e0       	ldi	r25, 0x03	; 3
     1e52:	0e 94 ac 11 	call	0x2358	; 0x2358 <SG90_GetTicks>
     1e56:	80 0f       	add	r24, r16
     1e58:	91 1f       	adc	r25, r17
